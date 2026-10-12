@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge/plan_log.schema.json",
+  "title": "PlanEvent",
+  "description": "计划过程事件（一行一事件，log 形态）。模型定义见 docs/design/06-plan.md §3.2；本 schema 描述**单条事件**（log 形态逐行校验）。",
+  "x-forge-scope": "project",
+  "x-forge-form": "log",
+  "type": "object",
+  "required": ["ts", "plan", "id", "op"],
+  "additionalProperties": false,
+  "properties": {
+    "ts": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ISO 8601。"
+    },
+    "plan": {
+      "type": "string",
+      "minLength": 1,
+      "description": "哪一份计划（计划标识）—— N 份的前提。"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "被改实体的 id（计划事件 = 计划 id；任务事件 = 任务 id）。"
+    },
+    "op": {
+      "enum": ["add", "set", "claim", "block", "reject", "done", "drop"],
+      "description": "枚举 = 写动词集；记 agent 实际所用动词，非由 (from,to) 反推（06-plan §2.5.1）。"
+    },
+    "from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "变更前的 status；无状态变更时缺省。"
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1,
+      "description": "变更后的 status；无状态变更时缺省。"
+    },
+    "note": {
+      "type": "string",
+      "minLength": 1,
+      "description": "本次附带的一句话（打回原因 / 完成说明 / 放弃原因…）。"
+    }
+  }
+}

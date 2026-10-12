@@ -1,0 +1,2 @@
+recursive-include forge/schemas *.json
+recursive-include forge/blueprints *

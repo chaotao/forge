@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "id": "drama",
+  "description": "AI 短剧创作项目：骨架文件 + 委托安装三个能力 skill —— img-prompt（出图提示词）· comfy（本地出图 / 图生视频）· aiwf（流程与运行记录）。",
+  "items": [
+    { "from": "payload:AGENTS.md", "to": "AGENTS.md" },
+    { "from": "payload:README.md", "to": "README.md" },
+    { "from": "payload:.gitignore", "to": ".gitignore" },
+    { "from": "payload:drama/README.md", "to": "drama/README.md" },
+    { "from": "skill:img-prompt" },
+    { "from": "skill:comfy" },
+    { "from": "skill:aiwf" }
+  ]
+}

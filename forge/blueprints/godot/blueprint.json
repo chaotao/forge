@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "id": "godot",
+  "description": "Godot 4 游戏开发项目：工程骨架（project.godot）+ 约定文件 + Godot AI 插件（MCP 把 AI 接进编辑器，随项目入库）。进度用 forge plan 记账。",
+  "items": [
+    { "from": "payload:AGENTS.md", "to": "AGENTS.md" },
+    { "from": "payload:README.md", "to": "README.md" },
+    { "from": "payload:.gitignore", "to": ".gitignore" },
+    { "from": "payload:project.godot", "to": "project.godot" },
+    { "from": "payload:addons/godot_ai", "to": "addons/godot_ai" }
+  ]
+}

@@ -1,0 +1,22 @@
+; Engine configuration file.
+; 由 forge 的 godot 蓝图落位 —— 打开编辑器后 Godot 会自行补全其余设置。
+; 请把 config/name 改成这个游戏真正的名字。
+
+config_version=5
+
+[application]
+
+config/name="Godot Game"
+
+[autoload]
+
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080

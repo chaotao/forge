@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "id": "demo",
+  "description": "仿真专用蓝图：三类落位各一份 —— payload 由 forge 自落；skill / aiwf 委托各自上游安装。",
+  "items": [
+    { "from": "payload:README.md", "to": "README.md" },
+    { "from": "payload:AGENTS.md", "to": "AGENTS.md" },
+    { "from": "skill:forge" },
+    { "from": "aiwf:std.review-check" }
+  ]
+}

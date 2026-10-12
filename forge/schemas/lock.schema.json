@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge/lock.schema.json",
+  "title": "Lock",
+  "description": "落位记录（project 域）。只记 forge 自己落下的项（payload）；委托上游安装的组件不入账。模型定义见 docs/design/03-store.md §4.2。",
+  "x-forge-scope": "project",
+  "x-forge-form": "snapshot",
+  "type": "object",
+  "required": ["version", "blueprint", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "blueprint": {
+      "type": "string",
+      "minLength": 1,
+      "description": "本次落位用的蓝图 id。单值 —— 多蓝图一次落位是 03-store §7 T2 的兼容扩充点。"
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["path", "from"],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "相对项目根的最终落点。"
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1,
+          "description": "来源种类 + 组件。payload 项收敛为 blueprint:<蓝图 id>。"
+        }
+      }
+    }
+  }
+}

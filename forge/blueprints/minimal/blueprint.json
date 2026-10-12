@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "id": "minimal",
+  "description": "通用骨架：约定文件 + 忽略规则。其余按项目类型后补。",
+  "items": [
+    { "from": "payload:AGENTS.md", "to": "AGENTS.md" },
+    { "from": "payload:README.md", "to": "README.md" },
+    { "from": "payload:.gitignore", "to": ".gitignore" }
+  ]
+}

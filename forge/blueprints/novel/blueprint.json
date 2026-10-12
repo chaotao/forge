@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "id": "novel",
+  "description": "长篇小说创作项目：骨架文件 + 委托安装 aiwf 能力（skill）与 std.novel-writing 写作流程（workflow）。",
+  "items": [
+    { "from": "payload:AGENTS.md", "to": "AGENTS.md" },
+    { "from": "payload:README.md", "to": "README.md" },
+    { "from": "payload:.gitignore", "to": ".gitignore" },
+    { "from": "payload:novel/README.md", "to": "novel/README.md" },
+    { "from": "skill:aiwf" },
+    { "from": "aiwf:std.novel-writing" }
+  ]
+}

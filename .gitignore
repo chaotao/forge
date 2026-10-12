@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+.venv/
+
+# 仿真的产物目录（sim/<场景>/_run/）—— 可随时删
+sim/**/_run/
+
+# AI 助手的本地记忆 / 会话基线（非项目资产，不入库）
+.workbuddy/

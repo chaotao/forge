@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge/inbox.schema.json",
+  "title": "Inbox",
+  "description": "项目里的念头（未处理 / 已交接 / 丢弃）。模型定义见 docs/design/07-inbox.md §3.1。",
+  "x-forge-scope": "project",
+  "x-forge-form": "snapshot",
+  "type": "object",
+  "required": ["version", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": ["id", "text", "status", "created"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^INB-[0-9]{3,}$",
+          "description": "项目内唯一 · 递增不复用（§3.3）。唯一性与递增由用例在写入前分配（§5）。"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "一句话：是什么念头（必填）。列表视图只渲染它，故须短（§3.1）。"
+        },
+        "status": {
+          "enum": ["open", "handed", "dropped"],
+          "description": "Item.status 词表（§4）。没有「进行中 / 已完成」—— 它不是任务。"
+        },
+        "created": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "捕获日期（YYYY-MM-DD）。"
+        },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "自由标签（不封闭词表，可多个，§4）；没有就不写该字段。"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "出处：哪个计划 / 哪次对话 —— 纯文本，不校验（§10-16）。"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "description": "补充说明 —— 只有 show 视图才给（§3.1 / §2.5）。"
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "description": "去向：交给谁 / 纳入哪 / 为何丢弃 —— 仅 handed / dropped 有（§3.1）。"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "const": "open" } },
+            "required": ["status"]
+          },
+          "then": { "not": { "required": ["target"] } },
+          "else": { "required": ["target"] }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.idea/
+.vscode/
+*.swp
+
+# 环境与密钥
+.env
+.env.local
+
+# 注意：`.aiwf/runs/` 是引擎的审计痕迹，**要进版本库**，不要忽略。

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge/projects.schema.json",
+  "title": "Projects",
+  "description": "受管项目清单 + 跨项目焦点（global 域）。模型定义见 docs/design/03-store.md §4.1。",
+  "x-forge-scope": "global",
+  "x-forge-form": "snapshot",
+  "type": "object",
+  "required": ["version", "projects"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/project" }
+    },
+    "focus": {
+      "type": "string",
+      "minLength": 1,
+      "description": "跨项目焦点 = 某个 Project 的 alias；未设置则整个字段缺省。"
+    }
+  },
+  "$defs": {
+    "project": {
+      "type": "object",
+      "required": ["path", "alias", "blueprint", "stage", "registered_at"],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "目标项目绝对路径。"
+        },
+        "alias": {
+          "type": "string",
+          "minLength": 1,
+          "description": "短名，全清单唯一 —— 它就是身份，focus 等引用它。"
+        },
+        "blueprint": {
+          "type": "string",
+          "minLength": 1,
+          "description": "立这个项目时用的蓝图 id。"
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1,
+          "description": "阶段。词表未定（03-store §7 S3），当前由入口层给定。"
+        },
+        "registered_at": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ISO 8601。"
+        }
+      }
+    }
+  }
+}

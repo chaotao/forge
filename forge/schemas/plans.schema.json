@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge/plans.schema.json",
+  "title": "Plans",
+  "description": "项目内计划（一项目多份）+ 任务。模型定义见 docs/design/06-plan.md §3.1。",
+  "x-forge-scope": "project",
+  "x-forge-form": "snapshot",
+  "type": "object",
+  "required": ["version", "plans"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "plans": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/plan" }
+    }
+  },
+  "$defs": {
+    "plan": {
+      "type": "object",
+      "required": ["id", "title", "goal", "criteria", "status", "tasks"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^.]+$",
+          "description": "计划标识（slug），项目内唯一 —— 机器地址；不得含 '.'（地址分隔符）。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "显示短名（名词短语），全局列表用。"
+        },
+        "goal": {
+          "type": "string",
+          "minLength": 1,
+          "description": "目标陈述（动词导向），单份计划视图用，也是 criteria 的语境。"
+        },
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/criterion" },
+          "description": "判据，≥1 条（06-plan §10-13）。"
+        },
+        "status": {
+          "enum": ["open", "reached", "dropped"],
+          "description": "Plan.status 词表（06-plan §4）。reached = 达成；dropped = 显式放弃。"
+        },
+        "tasks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/task" }
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "一条可核对的断言。"
+        },
+        "check": {
+          "type": "string",
+          "minLength": 1,
+          "description": "给 agent 的核对提示；引擎只存不执行（L1 B）。"
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "required": ["id", "title", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^.]+$",
+          "description": "计划内唯一（跨计划可重名）；不得含 '.'。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["todo", "doing", "done", "blocked"],
+          "description": "Task.status 词表（06-plan §4，4 态）。"
+        },
+        "deps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "前置任务 id（同一份计划内）；无依赖不写。"
+        },
+        "owner": {
+          "enum": ["human", "agent"],
+          "description": "L0 §2 人机分工。"
+        },
+        "done_when": {
+          "type": "string",
+          "minLength": 1,
+          "description": "验收条件（一句话）。"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge/blueprint.schema.json",
+  "title": "Blueprint",
+  "description": "蓝图 —— 一份有序的「落什么」清单 + 一份自带 payload。模型定义见 docs/design/05-scaffold.md §2.2。注意：本文件与蓝图库同级，不放 forge/schemas/（那里是 store 的 kind 目录，05-scaffold §2.5）。",
+  "type": "object",
+  "required": ["version", "id", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "必须与所在目录名一致（由代码额外校验）。"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "description": "有序 —— 顺序即落位顺序。",
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": ["from"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^(payload|skill|aiwf):.+$",
+          "description": "来源：payload:<蓝图内相对路径> / skill:<组件名> / aiwf:<工作流 id>。"
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1,
+          "description": "项目内相对路径 —— 只有 payload 项需要（落点由 forge 写）。"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": { "from": { "pattern": "^payload:" } },
+            "required": ["from"]
+          },
+          "then": { "required": ["to"] },
+          "else": { "not": { "required": ["to"] } }
+        }
+      ]
+    }
+  }
+}

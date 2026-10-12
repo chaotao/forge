@@ -1,0 +1,9 @@
+# Godot 生成的导入缓存与编辑器状态 —— 不入库
+.godot/
+*.tmp
+*.translation
+
+# 导出配置与凭据（后者含签名口令）—— 不入库
+export.cfg
+export_presets.cfg
+export_credentials.cfg
